@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <title>Το Νέον Cafe | Διαχείριση</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; }
+        .panel { max-width: 1000px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 20px; }
+        .btn { padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; border: none; cursor: pointer; color: white; }
+        .btn-add { background: #27ae60; }
+        .btn-update { background: #3498db; font-size: 12px; }
+        .btn-delete { background: #e74c3c; font-size: 12px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { text-align: left; padding: 15px; color: #7f8c8d; border-bottom: 2px solid #eee; }
+        td { padding: 15px; border-bottom: 1px solid #eee; }
+        .cat-badge { background: #e1f5fe; color: #0288d1; padding: 5px 10px; border-radius: 5px; font-size: 12px; }
+        input { width: 70px; padding: 8px; border: 1px solid #ddd; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="panel">
+        <div class="header">
+            <h1>🛠️ Control Panel</h1>
+            <div>
+                <a href="/admin" class="btn btn-add">+ Νέο Προϊόν</a>
+                <a href="/" target="_blank" style="margin-left:10px; color:#3498db;">Προβολή Site</a>
+            </div>
+        </div>
+        <table>
+            <tr><th>Κατηγορία</th><th>Προϊόν</th><th>Τιμή (€)</th><th>Ενέργειες</th></tr>
+            {% for item in items %}
+            <tr>
+                <td><span class="cat-badge">{{ item[1] }}</span></td>
+                <td><strong>{{ item[2] }}</strong></td>
+                <td>
+                    <form action="/update_price/{{ item[0] }}" method="POST" style="display:flex; gap:5px;">
+                        <input type="number" step="0.01" name="price" value="{{ item[3] }}">
+                        <button type="submit" class="btn btn-update">✓</button>
+                    </form>
+                </td>
+                <td><a href="/delete/{{ item[0] }}" class="btn btn-delete" onclick="return confirm('Διαγραφή;')">Διαγραφή</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
