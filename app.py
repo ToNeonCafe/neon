@@ -16,10 +16,15 @@ USER_DATA = {
 def verify(username, password):
     if username in USER_DATA and USER_DATA[username] == password:
         return username
-# ---------------------------
+
+# --- ΣΥΝΔΕΣΗ ΜΕ ΤΗ ΒΑΣΗ (ΔΙΟΡΘΩΜΕΝΗ ΓΙΑ RENDER) ---
+def get_db_connection():
+    # Χρησιμοποιούμε τον κατάλογο /tmp γιατί εκεί επιτρέπει το Render την εγγραφή αρχείων
+    conn = sqlite3.connect('/tmp/menu.db')
+    return conn
 
 def init_db():
-    conn = sqlite3.connect('menu.db')
+    conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS menu (
@@ -35,16 +40,18 @@ def init_db():
     conn.close()
 
 def generate_qr():
-    # Εδώ βάζεις το τελικό URL (Αύριο άλλαξε το σε https://toneoncafe.pythonanywhere.com)
-    url = "https://toneoncafe.pythonanywhere.com" 
+    # Εδώ είναι το Live Link σου στο Render
+    url = "https://toneon-cafe.onrender.com" 
     qr = qrcode.make(url)
+    # Αποθήκευση στον φάκελο static για να είναι προσβάσιμο
     if not os.path.exists('static'):
         os.makedirs('static')
     qr.save(os.path.join('static', 'menu_qr.png'))
 
 @app.route('/')
 def index():
-    conn = sqlite3.connect('menu.db')
+    init_db() # Δημιουργεί τη βάση αν δεν υπάρχει
+    conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM menu")
     all_items = cursor.fetchall()
@@ -65,7 +72,7 @@ def admin():
         description = request.form['description']
         image_url = request.form['image_url']
 
-        conn = sqlite3.connect('menu.db')
+        conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute('INSERT INTO menu (category, name, price, description, image_url) VALUES (?, ?, ?, ?, ?)', 
                        (category, name, price, description, image_url))
@@ -77,7 +84,7 @@ def admin():
 @app.route('/dashboard')
 @auth.login_required
 def dashboard():
-    conn = sqlite3.connect('menu.db')
+    conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM menu")
     all_items = cursor.fetchall()
@@ -91,7 +98,7 @@ def dashboard():
 @app.route('/delete/<int:item_id>')
 @auth.login_required
 def delete_item(item_id):
-    conn = sqlite3.connect('menu.db')
+    conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("DELETE FROM menu WHERE id = ?", (item_id,))
     conn.commit()
@@ -102,7 +109,7 @@ def delete_item(item_id):
 @auth.login_required
 def update_price(item_id):
     new_price = request.form['price']
-    conn = sqlite3.connect('menu.db')
+    conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("UPDATE menu SET price = ? WHERE id = ?", (new_price, item_id))
     conn.commit()
