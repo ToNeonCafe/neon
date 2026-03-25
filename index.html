@@ -3,54 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOnon Cafe - Menu</title>
+    <title>To Neon Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; text-align: center; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        h1 { color: #333; border-bottom: 2px solid #e67e22; padding-bottom: 10px; }
-        .category { background: #e67e22; color: white; padding: 10px; border-radius: 5px; margin-top: 20px; text-align: left; font-size: 1.2em; }
-        .item { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #eee; align-items: center; }
-        .item-info { text-align: left; }
-        .item-name { font-weight: bold; font-size: 1.1em; color: #2c3e50; }
-        .item-desc { font-size: 0.9em; color: #7f8c8d; margin-top: 4px; }
-        .item-price { font-weight: bold; color: #e67e22; font-size: 1.1em; }
-        .logo { max-width: 150px; margin-bottom: 10px; }
+        :root {
+            --primary-color: #e67e22; /* Πορτοκαλί του καφέ */
+            --bg-color: #1a1a1a;      /* Σκούρο background για στυλ */
+            --card-bg: #ffffff;
+        }
+
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            background-color: var(--bg-color); 
+            margin: 0; 
+            padding: 0; 
+            color: #333;
+        }
+
+        /* Header με το λογότυπο */
+        .header {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--primary-color);
+        }
+
+        .header h1 { 
+            font-family: 'Oswald', sans-serif; 
+            margin: 0; 
+            font-size: 2.5em; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .container { 
+            max-width: 500px; 
+            margin: -30px auto 40px; 
+            padding: 0 15px;
+        }
+
+        /* Κατηγορίες */
+        .category-title { 
+            background: var(--primary-color); 
+            color: white; 
+            padding: 12px 20px; 
+            border-radius: 50px; 
+            margin-top: 30px; 
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3em;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+            display: inline-block;
+        }
+
+        /* Κάρτες Προϊόντων */
+        .menu-list {
+            background: var(--card-bg);
+            border-radius: 20px;
+            margin-top: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .item { 
+            display: flex; 
+            justify-content: space-between; 
+            padding: 20px; 
+            border-bottom: 1px solid #eee; 
+            transition: background 0.3s;
+        }
+
+        .item:last-child { border-bottom: none; }
+
+        .item-info { flex: 1; text-align: left; }
+
+        .item-name { 
+            font-weight: 700; 
+            font-size: 1.1em; 
+            color: #2c3e50; 
+            margin: 0;
+        }
+
+        .item-desc { 
+            font-size: 0.85em; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+            line-height: 1.4;
+        }
+
+        .item-price { 
+            font-weight: 700; 
+            color: var(--primary-color); 
+            font-size: 1.2em; 
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        footer {
+            text-align: center;
+            color: #777;
+            font-size: 0.8em;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
 
+<div class="header">
+    <h1>TO NEON CAFE</h1>
+    <p>Premium Coffee & More</p>
+</div>
+
 <div class="container">
-    <h1>TOnon Cafe</h1>
     
-    <div class="category">Καφέδες & Ροθήματα</div>
-    
-    <div class="item">
-        <div class="item-info">
-            <div class="item-name">Φρέντο Εσπρέσο</div>
-            <div class="item-desc">Διπλή δόση espresso με πάγο</div>
+    <div class="category-title">Καφέδες & Ροθήματα</div>
+    <div class="menu-list">
+        <div class="item">
+            <div class="item-info">
+                <p class="item-name">Φρέντο Εσπρέσο</p>
+                <p class="item-desc">Διπλή δόση espresso 100% Arabica με πάγο</p>
+            </div>
+            <div class="item-price">2.50€</div>
         </div>
-        <div class="item-price">2.50€</div>
-    </div>
 
-    <div class="item">
-        <div class="item-info">
-            <div class="item-name">Φρέντο Καπουτσίνο</div>
-            <div class="item-desc">Με πλούσιο κρύο αφρόγαλα</div>
+        <div class="item">
+            <div class="item-info">
+                <p class="item-name">Φρέντο Καπουτσίνο</p>
+                <p class="item-desc">Με πλούσιο χειροποίητο κρύο αφρόγαλα</p>
+            </div>
+            <div class="item-price">3.00€</div>
         </div>
-        <div class="item-price">3.00€</div>
-    </div>
-
-    <div class="category">Αναψυκτικά</div>
-
-    <div class="item">
-        <div class="item-info">
-            <div class="item-name">Coca Cola 330ml</div>
-            <div class="item-desc">Κλασική / Zero / Light</div>
+        
+        <div class="item">
+            <div class="item-info">
+                <p class="item-name">Ελληνικός Μονός</p>
+                <p class="item-desc">Παραδοσιακός ψημένος στη χόβολη</p>
+            </div>
+            <div class="item-price">1.50€</div>
         </div>
-        <div class="item-price">2.00€</div>
     </div>
 
+    <div class="category-title">Αναψυκτικά</div>
+    <div class="menu-list">
+        <div class="item">
+            <div class="item-info">
+                <p class="item-name">Coca Cola 330ml</p>
+                <p class="item-desc">Classic / Zero / Light</p>
+            </div>
+            <div class="item-price">2.00€</div>
+        </div>
+        
+        <div class="item">
+            <div class="item-info">
+                <p class="item-name">Πορτοκαλάδα ΕΨΑ</p>
+                <p class="item-desc">Με ή χωρίς ανθρακικό</p>
+            </div>
+            <div class="item-price">2.00€</div>
+        </div>
     </div>
+
+</div>
+
+<footer>
+    &copy; 2026 To Neon Cafe | Created with &hearts;
+</footer>
 
 </body>
 </html>
